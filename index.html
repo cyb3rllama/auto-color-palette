@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Color Palette</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	   
+		<style>
+			body {
+				padding: 1rem 2rem;
+			}
+			
+			.color-palette {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				text-align: left;
+				li {
+					display: inline-block;
+					padding: 0 .5rem 1rem 0;
+					margin: 0;
+					div {
+						display: block;
+						width: 120px;
+						height: 80px;
+						color: white;
+						padding: .5rem;
+						font-size: $font-size-small;
+					}
+				}
+			}
+
+			.color-red { background-color: #ff0000; }
+			.color-green { background-color: #00ff00; }
+			.color-blue { background-color: #0000ff; }
+
+		</style>
+	</head>
+	<body>
+
+		<h1>Auto Color Palette</h1>
+
+		<div>
+
+			<ul class="color-palette">
+				<li><div class="swatch color-red">Red</div></li>
+				<li><div class="swatch color-green">Green</div></li>
+				<li><div class="swatch color-blue">Blue</div></li>
+			</ul>
+
+		</div>
+
+		<script>            
+			// Convert RGB color format to HEX
+			function rgb2hex(rgb){
+				rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+				var hex = (rgb && rgb.length === 4) ? "#" +
+					("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+					("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+					("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+				return hex.toUpperCase();
+			}
+			document.addEventListener("DOMContentLoaded", function(event) {                
+				// http://stackoverflow.com/questions/16053357/what-does-foreach-call-do-in-javascript
+				var color = "";
+				[].forEach.call(document.querySelectorAll(".swatch"),
+					function(element) {
+						color = getComputedStyle(element, null).getPropertyValue("background-color");
+						element.innerHTML = element.innerHTML + "<br />" + rgb2hex(color);
+					}
+				);
+			});
+		</script>
+
+	</body>
+</html>
